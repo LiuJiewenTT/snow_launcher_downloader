@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-	<title>Snow Launcher Downloader</title>
+    <title>Snow Launcher Downloader</title>
 </head>
+
 <body>
-	<h1>Snow Launcher Downloader</h1>
+    <h1>Snow Launcher Downloader</h1>
     <div class="container">
         <div id="server_form">
             <span>版本:</span>
@@ -26,6 +28,11 @@
         </div>
         <button id="download" onclick="download_launcher()">下载</button>
     </div>
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+    <p id="status">无下载进度</p>
     <script src="snow_launcher_downloader.js"></script>
 </body>
+
 </html>
