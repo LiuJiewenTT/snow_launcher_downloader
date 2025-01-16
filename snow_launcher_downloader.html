@@ -11,6 +11,9 @@
     <div class="container">
         <div id="server_form">
             <span>版本:</span>
+            <label>
+                <input type="text" id="version" name="version" placeholder="2.0.0">
+            </label>
             <label for="bilibili">
                 <input type="radio" id="bilibili" name="server" value="bilibili">B服
             </label>
@@ -21,7 +24,7 @@
                 <input type="radio" id="worldwide" name="server" value="worldwide">国际服
             </label>
         </div>
-        <button id="download">下载</button>
+        <button id="download" onclick="download_launcher()">下载</button>
     </div>
     <script src="snow_launcher_downloader.js"></script>
 </body>

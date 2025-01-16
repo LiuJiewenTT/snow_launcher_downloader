@@ -33,3 +33,8 @@ body {
 }
 
 
+input[name='version'] {
+    width: 5em;
+}
+
+
