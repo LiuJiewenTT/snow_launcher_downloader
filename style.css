@@ -38,14 +38,14 @@ input[name='version'] {
 }
 
 
-#progress-bar {
+#progress_bar {
     width: 0;
     height: 20px;
     background-color: green;
 }
 
 
-#progress-container {
+#progress_container {
     width: 100%;
     border: 1px solid #ccc;
     height: 20px;
