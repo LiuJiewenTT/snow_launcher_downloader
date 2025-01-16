@@ -52,7 +52,7 @@ async function download_launcher() {
         // 创建下载链接
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `Snowbreak_${server_name}_Launcher_v${launcher_version}.exe`; // 指定文件名
+        a.download = `Snowbreak_Launcher_${server_name}_v${launcher_version}.exe`; // 指定文件名
         a.click();
         statusText.textContent = '下载完成！';
 
