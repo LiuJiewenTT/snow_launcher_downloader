@@ -1,20 +1,54 @@
 
 async function download_launcher(mode) {
     let server_name = document.querySelector("input[name='server']:checked")?.value || "jinshan";
-    let launcher_version = document.querySelector("input[name='version']:checked")?.value || "2.0.0";
+    let launcher_version = document.querySelector("input[name='version']")?.value || "2.0.0";
 
     const progressBar = document.getElementById('progress_bar');
     const statusText = document.getElementById('status');
 
     let url = '';
+
     switch (server_name) {
         case "jinshan":
+            if (launcher_version === 'latest') {
+                await fetch('https://cbjq-content.xoyocdn.com/ob202307/launcher/jinshan/updates/latest').then((response) => response.text())  // 先将response转为文本
+                .then((text) => {
+                  // 获取文本（版本号）并将其赋值给 launcher_version 变量，去除末尾的换行符
+                  launcher_version = text.replace('\n', '');
+                  console.log(`Latest version: ${launcher_version}`);
+                })
+                .catch((error) => {
+                  console.error('Error fetching version:', error);
+                });
+            }
             url = `https://cbjq-content.xoyocdn.com/ob202307/launcher/jinshan/updates/${launcher_version}.exe`;
             break;
         case "bilibili":
+            if (launcher_version === 'latest') {
+                await fetch('https://cbjq-content.xoyocdn.com/ob202307/launcher/bilibili/updates/latest').then((response) => response.text())  // 先将response转为文本
+                .then((text) => {
+                  // 获取文本（版本号）并将其赋值给 launcher_version 变量，去除末尾的换行符
+                  launcher_version = text.replace('\n', '');
+                  console.log(`Latest version: ${launcher_version}`);
+                })
+                .catch((error) => {
+                  console.error('Error fetching version:', error);
+                });
+            }
             url = `https://cbjq-content.xoyocdn.com/ob202307/launcher/bilibili/updates/${launcher_version}.exe`;
             break;
         case "worldwide":
+            if (launcher_version === 'latest') {
+                await fetch('https://snowbreak-content.amazingseasuncdn.com/ob202307/launcher/seasun/updates/latest').then((response) => response.text())  // 先将response转为文本
+                .then((text) => {
+                  // 获取文本（版本号）并将其赋值给 launcher_version 变量，去除末尾的换行符
+                  launcher_version = text.replace('\n', '');
+                  console.log(`Latest version: ${launcher_version}`);
+                })
+                .catch((error) => {
+                  console.error('Error fetching version:', error);
+                });
+            }
             url = `https://snowbreak-content.amazingseasuncdn.com/ob202307/launcher/seasun/updates/${launcher_version}.exe`;
             break;
     }
@@ -70,3 +104,10 @@ async function download_launcher(mode) {
         a.click();
     }
 }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    let inputBox = document.querySelector("input[type='text'][id='version']");
+
+    inputBox.value = 'latest';
+});
