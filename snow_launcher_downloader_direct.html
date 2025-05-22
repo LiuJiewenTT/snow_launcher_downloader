@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="《尘白禁区》的尘白启动器下载站，提供B服、官服和国际服最新版本的尘白启动器下载">
+    <meta name="keywords" content="尘白禁区,尘白启动器下载,Snowbreak,游戏下载,Launcher download,CBJQ">
     <link rel="stylesheet" href="style.css">
 	<title>Snow Launcher Downloader</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const isChinese = /^zh/.test(navigator.language || navigator.userLanguage);
+            if (isChinese) {
+                document.title = '尘白启动器下载站';
+                document.querySelector('h1').textContent = '尘白启动器下载站';
+            }
+        });
+    </script>
 </head>
 <body>
 	<h1>Snow Launcher Downloader</h1>
@@ -29,10 +40,9 @@
     <script src="snow_launcher_downloader.js"></script>
 
     <div class="badges">
-        <p>自2025年3月19日以来的累计访问量：</p>
-        <img src="https://visitor-badge.glitch.me/badge?page_id=LiuJiewenTT.visitor-badge.snow_launcher_downloader" alt="visitor badge"/>
-        <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FLiuJiewenTT%2Fsnow_launcher_downloader&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
-        <a href="https://hits.sh/liujiewentt.github.io/snow_launcher_downloader/snow_launcher_downloader/"><img alt="Hits" src="https://hits.sh/liujiewentt.github.io/snow_launcher_downloader/snow_launcher_downloader.svg"/></a>
+        <a href="https://github.com/LiuJiewenTT/snow_launcher_downloader"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/LiuJiewenTT/snow_launcher_downloader"></a>
+
+        <a title="自2025年3月19日以来的累计访问量" href="https://hits.sh/liujiewentt.github.io/snow_launcher_downloader/snow_launcher_downloader/"><img alt="Hits" src="https://hits.sh/liujiewentt.github.io/snow_launcher_downloader/snow_launcher_downloader.svg"/></a>
     </div>
 
     
@@ -50,7 +60,7 @@
 
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-RZXSPMNS80"></script>
-        <script>
+        <script async>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
