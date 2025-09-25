@@ -9,12 +9,30 @@ html {
 
 
 body {
-    display: flex;
+    position: relative;
     height: 100%;
     margin: 0;
+}
+
+#background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+}
+
+.content-overlay {
+    display: flex;
+    height: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
 }
 
 
