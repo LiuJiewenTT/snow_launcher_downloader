@@ -1,5 +1,6 @@
+var cbjq_homepage_html = null;
 var cbjq_homepage_baseUrl = null;
-var cbjq_homepage_css = {};
+var cbjq_homepage_css_linkElement = {};
 
 /**
  * 根据 CSS 文件的 URL 和相对路径，返回正确的绝对路径
@@ -116,7 +117,7 @@ async function download_launcher(mode) {
 }
 
 
-async function loadBackgroundStyles() {
+async function load_cbjq_info() {
     try {
         // 1. 获取官网HTML
         let response = await fetch('https://super-frog-e2a8-filtered-cors.favortina.dpdns.org/?url=https://www.cbjq.com/');   // 使用CORS中转
@@ -125,13 +126,25 @@ async function loadBackgroundStyles() {
         }
         if (!response.ok) throw new Error('Failed to fetch website');
         const html = await response.text();
-        
+        cbjq_homepage_html = html;
+
         // 2. 提取base标签href属性
         const baseMatch = html.match(/<base[^>]+href="([^"]+)"/);
         const baseUrl = baseMatch ? baseMatch[1] : 'https://www.cbjq.com/';
         cbjq_homepage_baseUrl = baseUrl;
         
-        // 3. 提取CSS链接
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+
+async function loadBackgroundStyles() {
+    try {
+        // 1. 获取官网HTML
+        let html = cbjq_homepage_html;
+        
+        // 2. 提取CSS链接
         const cssLinkMatch = html.match(/<link[^>]+assets\/css\/page-main[^>]+>/);
         if (!cssLinkMatch) throw new Error('CSS link not found');
         
@@ -141,15 +154,15 @@ async function loadBackgroundStyles() {
         
         const cssUrl = new URL(hrefMatch[1], baseUrl).href;
         
-        // 4. 创建并插入link元素
+        // 3. 创建并插入link元素
         const link = document.createElement('link');
         link.id = 'cbjq-homepage-css-page-main';
         link.rel = 'stylesheet';
         link.href = cssUrl;
-        cbjq_homepage_css["page-main"] = link;
+        cbjq_homepage_css_linkElement["page-main"] = link;
         document.head.appendChild(link);
         
-        // 5. 应用类名到背景容器
+        // 4. 应用类名到背景容器
         const bgContainer = document.getElementById('background-container');
         bgContainer.classList.add('index-firstScreenRoot-10LL-');
         
@@ -160,10 +173,11 @@ async function loadBackgroundStyles() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     let inputBox = document.querySelector("input[type='text'][id='version']");
     inputBox.value = 'latest';
     
+    await load_cbjq_info();
     // 加载背景样式
-    loadBackgroundStyles();
+    await loadBackgroundStyles();
 });
