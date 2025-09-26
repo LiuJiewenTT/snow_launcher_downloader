@@ -97,11 +97,18 @@ async function download_launcher(mode) {
 async function loadBackgroundStyles() {
     try {
         // 1. 获取官网HTML
-        const response = await fetch('https://www.cbjq.com/');
+        let response = await fetch('https://super-frog-e2a8-filtered-cors.favortina.dpdns.org/?url=https://www.cbjq.com/');   // 使用CORS中转
+        if (!response.ok) {
+            response = await fetch('https://super-frog-e2a8-filtered-cors.liuljwtt.workers.dev/?url=https://www.cbjq.com/');   // 使用CORS中转
+        }
         if (!response.ok) throw new Error('Failed to fetch website');
         const html = await response.text();
         
-        // 2. 提取CSS链接
+        // 2. 提取base标签href属性
+        const baseMatch = html.match(/<base[^>]+href="([^"]+)"/);
+        const baseUrl = baseMatch ? baseMatch[1] : 'https://www.cbjq.com/';
+        
+        // 3. 提取CSS链接
         const cssLinkMatch = html.match(/<link[^>]+assets\/css\/page-main[^>]+>/);
         if (!cssLinkMatch) throw new Error('CSS link not found');
         
@@ -109,15 +116,15 @@ async function loadBackgroundStyles() {
         const hrefMatch = fullLinkTag.match(/href="([^"]+)"/);
         if (!hrefMatch) throw new Error('Href attribute not found');
         
-        const cssUrl = new URL(hrefMatch[1], 'https://www.cbjq.com/').href;
+        const cssUrl = new URL(hrefMatch[1], baseUrl).href;
         
-        // 3. 创建并插入link元素
+        // 4. 创建并插入link元素
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = cssUrl;
         document.head.appendChild(link);
         
-        // 4. 应用类名到背景容器
+        // 5. 应用类名到背景容器
         const bgContainer = document.getElementById('background-container');
         bgContainer.classList.add('index-firstScreenRoot-10LL-');
         
