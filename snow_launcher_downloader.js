@@ -1,3 +1,25 @@
+var cbjq_homepage_baseUrl = null;
+var cbjq_homepage_css = {};
+
+/**
+ * 根据 CSS 文件的 URL 和相对路径，返回正确的绝对路径
+ * @param {string} relativePath - CSS 中的相对路径，例如 "../images/bg.png"
+ * @param {string} cssFileUrl - CSS 文件的完整 URL，例如 "https://otherdomain.com/assets/css/style.css"
+ * @returns {string} - 解析后的绝对路径
+ */
+function resolveCssUrl(relativePath, cssFileUrl) {
+  // 去掉 url() 包裹和引号
+  const clean = relativePath.replace(/['"]/g, "").trim();
+
+  // 如果已经是绝对路径或 data URI，就直接返回
+  if (/^(https?:|data:|\/)/.test(clean)) {
+    return clean;
+  }
+
+  // 使用 URL 构造器自动处理 ../ 和 ./ 等路径
+  return new URL(clean, cssFileUrl).href;
+}
+
 
 async function download_launcher(mode) {
     let server_name = document.querySelector("input[name='server']:checked")?.value || "jinshan";
@@ -107,6 +129,7 @@ async function loadBackgroundStyles() {
         // 2. 提取base标签href属性
         const baseMatch = html.match(/<base[^>]+href="([^"]+)"/);
         const baseUrl = baseMatch ? baseMatch[1] : 'https://www.cbjq.com/';
+        cbjq_homepage_baseUrl = baseUrl;
         
         // 3. 提取CSS链接
         const cssLinkMatch = html.match(/<link[^>]+assets\/css\/page-main[^>]+>/);
@@ -120,8 +143,10 @@ async function loadBackgroundStyles() {
         
         // 4. 创建并插入link元素
         const link = document.createElement('link');
+        link.id = 'cbjq-homepage-css-page-main';
         link.rel = 'stylesheet';
         link.href = cssUrl;
+        cbjq_homepage_css["page-main"] = link;
         document.head.appendChild(link);
         
         // 5. 应用类名到背景容器
