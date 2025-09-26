@@ -1,25 +1,7 @@
 var cbjq_homepage_html = null;
 var cbjq_homepage_baseUrl = null;
 var cbjq_homepage_css_linkElement = {};
-
-/**
- * 根据 CSS 文件的 URL 和相对路径，返回正确的绝对路径
- * @param {string} relativePath - CSS 中的相对路径，例如 "../images/bg.png"
- * @param {string} cssFileUrl - CSS 文件的完整 URL，例如 "https://otherdomain.com/assets/css/style.css"
- * @returns {string} - 解析后的绝对路径
- */
-function resolveCssUrl(relativePath, cssFileUrl) {
-  // 去掉 url() 包裹和引号
-  const clean = relativePath.replace(/['"]/g, "").trim();
-
-  // 如果已经是绝对路径或 data URI，就直接返回
-  if (/^(https?:|data:|\/)/.test(clean)) {
-    return clean;
-  }
-
-  // 使用 URL 构造器自动处理 ../ 和 ./ 等路径
-  return new URL(clean, cssFileUrl).href;
-}
+var cbjq_homepage_css_styleElement = {};
 
 
 async function download_launcher(mode) {
@@ -117,6 +99,26 @@ async function download_launcher(mode) {
 }
 
 
+/**
+ * 根据 CSS 文件的 URL 和相对路径，返回正确的绝对路径
+ * @param {string} relativePath - CSS 中的相对路径，例如 "../images/bg.png"
+ * @param {string} cssFileUrl - CSS 文件的完整 URL，例如 "https://otherdomain.com/assets/css/style.css"
+ * @returns {string} - 解析后的绝对路径
+ */
+function resolveCssUrl(relativePath, cssFileUrl) {
+  // 去掉 url() 包裹和引号
+  const clean = relativePath.replace(/['"]/g, "").trim();
+
+  // 如果已经是绝对路径或 data URI，就直接返回
+  if (/^(https?:|data:|\/)/.test(clean)) {
+    return clean;
+  }
+
+  // 使用 URL 构造器自动处理 ../ 和 ./ 等路径
+  return new URL(clean, cssFileUrl).href;
+}
+
+
 async function load_cbjq_info() {
     try {
         // 1. 获取官网HTML
@@ -135,6 +137,7 @@ async function load_cbjq_info() {
         
     } catch (error) {
         console.error('Error:', error);
+        alert(`Failed to load CBJQ homepage: ${error}`);
     }
 }
 
